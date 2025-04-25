@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build
+        run: npm run build
+        
+      - name: Deploy
+        run: |
+          # 创建一个全新的临时目录
+          mkdir -p /tmp/gh-pages
+          # 只复制out目录的内容到临时目录
+          cp -r out/* /tmp/gh-pages/
+          # 添加.nojekyll文件（防止GitHub Pages忽略下划线开头的文件）
+          touch /tmp/gh-pages/.nojekyll
+          
+          # 配置Git
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          # 切换到临时目录
+          cd /tmp/gh-pages
+          
+          # 初始化一个全新的Git仓库
+          git init
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          
+          # 强制推送到gh-pages分支
+          git push -f https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages

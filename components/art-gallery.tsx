@@ -130,7 +130,7 @@ const artworks = [
       "《呐喊》是表现主义的代表作，描绘了一个扭曲的人形在桥上发出尖叫，背景是血红色的天空。这幅画表达了现代人的焦虑和恐惧。",
     meaning:
       "《呐喊》被视为现代人精神危机的象征，表达了人类面对现代社会时的孤独、焦虑和恐惧。扭曲的形象和鲜艳的色彩强化了这种情感体验。",
-    imageUrl: "/images/the-scream.png",
+    imageUrl: "/van-gogh-3d-gallery/images/the-scream.png",
     color: "#FF5722", // 橙红色代表呐喊
     style: "scream",
     position: [3.5, 2, 4.9],
